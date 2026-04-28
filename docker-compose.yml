@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: order-flow-postgres
+    environment:
+      POSTGRES_DB: order_flow_db
+      POSTGRES_USER: luis
+      POSTGRES_PASSWORD: luis
+    ports:
+      - "5432:5432"
+    volumes:
+      - order_flow_data:/var/lib/postgresql/data
+
+volumes:
+  order_flow_data:
