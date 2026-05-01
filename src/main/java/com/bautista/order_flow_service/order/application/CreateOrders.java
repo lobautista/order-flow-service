@@ -16,8 +16,9 @@ public class CreateOrders {
     }
 
     public Order execute() {
-        UUID id = UuidCreator.getTimeOrdered();
-        Order order = new Order(id, "created");
-        return this.ordersRepository.save(order);
+        //UUID id = UuidCreator.getTimeOrdered();
+        //UUID customerId = UuidCreator.getTimeOrdered();
+        //Order order = new Order(id, customerId, "created");
+        return this.ordersRepository.save(null);
     }
 }
