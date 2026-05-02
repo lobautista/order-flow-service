@@ -1,4 +1,4 @@
-package com.bautista.order_flow_service.order.infrastructure.entities;
+package com.bautista.order_flow_service.order.infrastructure.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order {
+public class OrderJpaEntity {
 
     @Id
     @Column(name = "order_id", nullable = false, updatable = false)

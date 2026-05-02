@@ -1,4 +1,4 @@
-package com.bautista.order_flow_service.order.infrastructure.entities;
+package com.bautista.order_flow_service.order.infrastructure.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
