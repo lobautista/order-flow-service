@@ -1,12 +1,7 @@
 package com.bautista.order_flow_service.order.infrastructure.persistence;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -22,9 +17,6 @@ public class OrderItems {
     @Column(name = "order_item_id", nullable = false, updatable = false)
     private UUID orderItemId;
 
-    @Column(name = "order_Id", nullable = false, updatable = false)
-    private UUID orderId;
-
     @Column(name = "product_id", nullable = false, updatable = false)
     private UUID productId;
 
@@ -39,4 +31,10 @@ public class OrderItems {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private OrderJpaEntity order;
 }

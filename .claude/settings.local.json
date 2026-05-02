@@ -1,7 +1,21 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir /s /b src)"
+      "Bash(dir /s /b src)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse -Force | Select-Object -Property FullName, PSIsContainer | Sort-Object FullName | ForEach-Object { if \\($_.PSIsContainer\\) { \"$\\($_.FullName\\)\\\\\" } else { $_.FullName } })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse -Force | Sort-Object FullName | ForEach-Object { $_.FullName })",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Sort-Object FullName)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse | ForEach-Object { $_.FullName })",
+      "Bash(Select-Object -Property FullName, PSIsContainer)",
+      "Bash(ConvertTo-Json -Depth 100)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse -Force | Where-Object { -not $_.PSIsContainer } | Select-Object FullName)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse | Select-Object FullName, @{Name='IsFolder'; Expression={$_.PSIsContainer}} | Format-Table -AutoSize)",
+      "Bash(Get-ChildItem -Path src -Recurse)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse | Select-Object -Property FullName, PSIsContainer | Sort-Object FullName | ForEach-Object { if \\($_.PSIsContainer\\) { \"[DIR]  $\\($_.FullName\\)\" } else { \"[FILE] $\\($_.FullName\\)\" } })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse | Select-Object FullName | ForEach-Object { $_.FullName } | Sort-Object)"
     ]
   }
 }
