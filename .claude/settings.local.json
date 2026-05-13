@@ -15,7 +15,15 @@
       "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse | Select-Object FullName, @{Name='IsFolder'; Expression={$_.PSIsContainer}} | Format-Table -AutoSize)",
       "Bash(Get-ChildItem -Path src -Recurse)",
       "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse | Select-Object -Property FullName, PSIsContainer | Sort-Object FullName | ForEach-Object { if \\($_.PSIsContainer\\) { \"[DIR]  $\\($_.FullName\\)\" } else { \"[FILE] $\\($_.FullName\\)\" } })",
-      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse | Select-Object FullName | ForEach-Object { $_.FullName } | Sort-Object)"
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\" -Recurse | Select-Object FullName | ForEach-Object { $_.FullName } | Sort-Object)",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(Test-Path *)",
+      "PowerShell([System.IO.Directory]::GetDirectories\\(\"$env:USERPROFILE\\\\.claude\\\\projects\"\\))",
+      "PowerShell([System.IO.Directory]::GetFiles\\(\"$env:USERPROFILE\\\\.claude\\\\projects\\\\C--Users-luisb-git-order-flow-service\"\\) | ForEach-Object { [System.IO.FileInfo]$_ } | Sort-Object LastWriteTime -Descending | Select-Object -First 50 | Select-Object Name, LastWriteTime)",
+      "PowerShell([System.IO.Directory]::GetFiles\\(\"$env:USERPROFILE\\\\.claude\\\\projects\\\\C--Users-luisb-git-AlgorithmsAndDataStructures\"\\) | ForEach-Object { [System.IO.FileInfo]$_ } | Sort-Object LastWriteTime -Descending | Select-Object -First 50 | Select-Object Name, LastWriteTime)",
+      "PowerShell($path = \"$env:USERPROFILE\\\\.claude\\\\projects\\\\C--Users-luisb-git-order-flow-service\"; [System.IO.Directory]::GetFiles\\($path\\) | Measure-Object | Select-Object -ExpandProperty Count)",
+      "PowerShell($path = \"$env:USERPROFILE\\\\.claude\\\\projects\\\\C--Users-luisb-git-order-flow-service\"; [System.IO.Directory]::GetFiles\\($path\\) | ForEach-Object { [System.IO.Path]::GetFileName\\($_\\) })",
+      "Skill(update-config)"
     ]
   }
 }

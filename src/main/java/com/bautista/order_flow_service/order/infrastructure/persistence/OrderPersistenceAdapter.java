@@ -4,7 +4,6 @@ import com.bautista.order_flow_service.order.domain.Order;
 import com.bautista.order_flow_service.order.domain.OrderRepository;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,21 +31,21 @@ public class OrderPersistenceAdapter implements OrderRepository {
                 order.getStatus().name(),
                 order.getTotalAmount(),
                 order.getCurrency(),
-                Timestamp.from(order.getCreatedAt()),
-                Timestamp.from(Instant.now()),
+                order.getCreatedAt(),
+                Instant.now(),
                 null,  // set below
                 new ArrayList<>()
         );
 
-        List<OrderItems> jpaItems = order.getItems()
+        List<OrderItem> jpaItems = order.getItems()
                 .stream()
-                .map(item -> new OrderItems(
+                .map(item -> new OrderItem(
                         item.getOrderItemId(),
                         item.getProductId(),
                         item.getQuantity(),
                         item.getUnitPrice(),
                         item.getSubTotal(),
-                        Timestamp.from(Instant.now()),
+                        Instant.now(),
                         entity
                 )).toList();
         entity.setItems(jpaItems);

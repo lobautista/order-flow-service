@@ -3,7 +3,8 @@ package com.bautista.order_flow_service.order.infrastructure.persistence;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -11,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "ORDER_ITEMS")
-public class OrderItems {
+public class OrderItem {
 
     @Id
     @Column(name = "order_item_id", nullable = false, updatable = false)
@@ -24,13 +25,13 @@ public class OrderItems {
     private int quantity;
 
     @Column(name = "unit_price", nullable = false, updatable = false)
-    double unitPrice;
+    private BigDecimal unitPrice;
 
     @Column(name = "subtotal", nullable = false, updatable = false)
-    double subtotal;
+    private BigDecimal subtotal;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Timestamp createdAt;
+    private Instant createdAt;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
