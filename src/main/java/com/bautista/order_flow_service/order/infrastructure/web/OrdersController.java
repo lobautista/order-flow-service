@@ -3,6 +3,7 @@ package com.bautista.order_flow_service.order.infrastructure.web;
 import com.bautista.order_flow_service.order.application.port.in.CreateOrderUseCase;
 import com.bautista.order_flow_service.order.domain.Order;
 import com.bautista.order_flow_service.order.domain.OrderItem;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,8 @@ public class OrdersController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<OrderResponse> postOrders(@RequestBody CreateOrderRequest createOrderRequest) {
+    public ResponseEntity<OrderResponse> postOrders(
+            @Valid @RequestBody CreateOrderRequest createOrderRequest) {
         List<OrderItem> items = createOrderRequest.getOrderItemRequests()
                 .stream()
                 .map(item -> new OrderItem(
