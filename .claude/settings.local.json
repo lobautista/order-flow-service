@@ -23,7 +23,10 @@
       "PowerShell([System.IO.Directory]::GetFiles\\(\"$env:USERPROFILE\\\\.claude\\\\projects\\\\C--Users-luisb-git-AlgorithmsAndDataStructures\"\\) | ForEach-Object { [System.IO.FileInfo]$_ } | Sort-Object LastWriteTime -Descending | Select-Object -First 50 | Select-Object Name, LastWriteTime)",
       "PowerShell($path = \"$env:USERPROFILE\\\\.claude\\\\projects\\\\C--Users-luisb-git-order-flow-service\"; [System.IO.Directory]::GetFiles\\($path\\) | Measure-Object | Select-Object -ExpandProperty Count)",
       "PowerShell($path = \"$env:USERPROFILE\\\\.claude\\\\projects\\\\C--Users-luisb-git-order-flow-service\"; [System.IO.Directory]::GetFiles\\($path\\) | ForEach-Object { [System.IO.Path]::GetFileName\\($_\\) })",
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\" -Recurse -Directory -Name)",
+      "Bash(Select-Object -First 20)",
+      "PowerShell(head *)"
     ]
   }
 }
