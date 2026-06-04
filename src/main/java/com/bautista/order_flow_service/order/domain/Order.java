@@ -17,21 +17,33 @@ public class Order {
     private final String currency;
     private final BigDecimal totalAmount;
     private final Instant createdAt;
+    private final List<OrderStatusHistory> orderStatusHistory;
 
-    private Order(UUID customerId, String currency, List<OrderItem> items) {
-        this.orderId = UuidCreator.getTimeOrdered();
+    private Order(UUID orderId, UUID customerId, String currency, List<OrderItem> items, Instant createdAt, List<OrderStatusHistory> orderStatusHistory) {
+        this.orderId = orderId;
         this.customerId = customerId;
         this.currency = currency;
         this.items = items;
         this.status = OrderStatus.PENDING;
         this.totalAmount = items.stream().map(OrderItem::getSubTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-        this.createdAt = Instant.now();
+        this.createdAt = createdAt;
+        this.orderStatusHistory = orderStatusHistory;
     }
 
     public static Order create(UUID customerId, String currency, List<OrderItem> items) {
         if (items == null || items.isEmpty()) {
             throw new IllegalArgumentException("Order must contain at least one item");
         }
-        return new Order(customerId, currency, items);
+        UUID orderId = UuidCreator.getTimeOrdered();
+        Instant now = Instant.now();
+        List<OrderStatusHistory> orderStatusHistory = List.of(new OrderStatusHistory(
+                orderId,
+                null,
+                OrderStatus.PENDING,
+                "Order created",
+                null,
+                now
+        ));
+        return new Order(orderId, customerId, currency, items, now, orderStatusHistory);
     }
 }

@@ -26,7 +26,10 @@
       "Skill(update-config)",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\" -Recurse -Directory -Name)",
       "Bash(Select-Object -First 20)",
-      "PowerShell(head *)"
+      "PowerShell(head *)",
+      "Bash(xargs wc -l)",
+      "Bash(rm \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\\\\main\\\\resources\\\\db\\\\changelog\\\\db.changelog-master.yaml\")",
+      "Bash(rm \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\\\\main\\\\resources\\\\db\\\\changelog\\\\migrations\\\\001-create-orders-schema.sql\")"
     ]
   }
 }

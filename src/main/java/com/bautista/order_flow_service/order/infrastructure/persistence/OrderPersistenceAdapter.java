@@ -5,7 +5,6 @@ import com.bautista.order_flow_service.order.domain.OrderRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -34,7 +33,7 @@ public class OrderPersistenceAdapter implements OrderRepository {
                 order.getCreatedAt(),
                 Instant.now(),
                 null,  // set below
-                new ArrayList<>()
+                null
         );
 
         List<OrderItem> jpaItems = order.getItems()
@@ -48,7 +47,21 @@ public class OrderPersistenceAdapter implements OrderRepository {
                         Instant.now(),
                         entity
                 )).toList();
+
+        List<OrderStatusHistory> jpaHistory = order.getOrderStatusHistory()
+                .stream()
+                .map(history -> new OrderStatusHistory(
+                        history.getHistoryId(),
+                        null != history.getOldStatus() ? history.getOldStatus().name() : null,
+                        history.getNewStatus().name(),
+                        history.getReason(),
+                        history.getEventId(),
+                        history.getChangedAt(),
+                        entity
+                )).toList();
+
         entity.setItems(jpaItems);
+        entity.setStatuses(jpaHistory);
 
         return entity;
     }
