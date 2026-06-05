@@ -1,5 +1,6 @@
 package com.bautista.order_flow_service.order.domain;
 
+import com.bautista.order_flow_service.order.domain.exception.OrderValidationException;
 import com.github.f4b6a3.uuid.UuidCreator;
 import lombok.Getter;
 
@@ -32,7 +33,7 @@ public class Order {
 
     public static Order create(UUID customerId, String currency, List<OrderItem> items) {
         if (items == null || items.isEmpty()) {
-            throw new IllegalArgumentException("Order must contain at least one item");
+            throw new OrderValidationException("Order must contain at least one item");
         }
         UUID orderId = UuidCreator.getTimeOrdered();
         Instant now = Instant.now();

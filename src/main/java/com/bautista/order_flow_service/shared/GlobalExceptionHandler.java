@@ -1,5 +1,6 @@
 package com.bautista.order_flow_service.shared;
 
+import com.bautista.order_flow_service.order.domain.exception.OrderValidationException;
 import com.bautista.order_flow_service.shared.infrastructure.web.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,14 @@ public class GlobalExceptionHandler {
         ex.getBindingResult()
                 .getFieldErrors()
                 .forEach(error -> errors.add(error.getDefaultMessage()));
+        ErrorResponse response = ErrorResponse.of(errors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleOrderValidationException (OrderValidationException ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
         ErrorResponse response = ErrorResponse.of(errors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
