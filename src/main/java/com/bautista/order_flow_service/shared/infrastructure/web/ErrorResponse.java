@@ -1,7 +1,5 @@
 package com.bautista.order_flow_service.shared.infrastructure.web;
 
-import com.bautista.order_flow_service.order.domain.Order;
-import com.bautista.order_flow_service.order.infrastructure.web.OrderResponse;
 import lombok.Data;
 
 import java.util.List;

@@ -6,5 +6,6 @@
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="migrations/001-create-orders-schema.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/002-create-idempotency-keys-schema.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

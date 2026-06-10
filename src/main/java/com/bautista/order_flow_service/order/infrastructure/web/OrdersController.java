@@ -8,21 +8,30 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class OrdersController {
-    private CreateOrderUseCase createOrderUseCase;
+    private final CreateOrderUseCase createOrderUseCase;
+    private final IdempotencyService idempotencyService;
 
-    public OrdersController (CreateOrderUseCase createOrderUseCase) {
+    public OrdersController(CreateOrderUseCase createOrderUseCase, IdempotencyService idempotencyService) {
         this.createOrderUseCase = createOrderUseCase;
+        this.idempotencyService = idempotencyService;
     }
 
     @PostMapping("/orders")
     public ResponseEntity<OrderResponse> postOrders(
-            @Valid @RequestBody CreateOrderRequest createOrderRequest) {
+            @Valid @RequestBody CreateOrderRequest createOrderRequest,
+            @RequestHeader("Idempotency-Key") UUID idempotencyKey) {
+        Optional<ResponseEntity<OrderResponse>> cached = idempotencyService.findCachedResponse(idempotencyKey, "/orders");
+        if (cached.isPresent()) return cached.get();
+
         List<OrderItem> items = createOrderRequest.getOrderItemRequests()
                 .stream()
                 .map(item -> new OrderItem(
@@ -35,6 +44,8 @@ public class OrdersController {
                 createOrderRequest.getCurrency(),
                 items
         );
-        return ResponseEntity.status(HttpStatus.CREATED).body(OrderResponse.from(order));
+        OrderResponse orderResponse = OrderResponse.from(order);
+        idempotencyService.save(idempotencyKey, "/orders", HttpStatus.CREATED.value(), orderResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
     }
 }
