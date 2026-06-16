@@ -30,7 +30,17 @@
       "Bash(xargs wc -l)",
       "Bash(rm \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\\\\main\\\\resources\\\\db\\\\changelog\\\\db.changelog-master.yaml\")",
       "Bash(rm \"C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service\\\\src\\\\main\\\\resources\\\\db\\\\changelog\\\\migrations\\\\001-create-orders-schema.sql\")",
-      "Skill(code-review)"
+      "Skill(code-review)",
+      "PowerShell(cd C:\\\\Users\\\\luisb\\\\git\\\\order-flow-service; $output = mvn spring-boot:run 2>&1; $start = \\($output | Select-String \"APPLICATION FAILED TO START\" | Select-Object -First 1\\).LineNumber; $output[\\($start-1\\)..\\($start+20\\)])",
+      "Bash(PGPASSWORD=luis psql -h localhost -U luis -d order_flow_db -c \"SELECT id, author, filename, dateexecuted, md5sum FROM databasechangelog ORDER BY orderexecuted;\" -c \"\\\\dt\")",
+      "Bash(docker exec *)",
+      "Bash(timeout 120 ./mvnw spring-boot:run)",
+      "Read(//c/Users/luisb/AppData/Local/Temp/claude/C--Users-luisb-git-order-flow-service/5499f26c-2cbf-4fae-9218-cb744bda2d93/tasks/**)",
+      "Bash(timeout 90 ./mvnw -q spring-boot:run -Dspring-boot.run.arguments=\"--debug\")",
+      "Bash(echo \"exit=$?\")",
+      "Read(//tmp/**)",
+      "Bash(./mvnw -q dependency:tree)",
+      "Bash(./mvnw dependency:tree)"
     ]
   }
 }

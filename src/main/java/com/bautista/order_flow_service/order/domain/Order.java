@@ -1,6 +1,8 @@
 package com.bautista.order_flow_service.order.domain;
 
 import com.bautista.order_flow_service.order.domain.exception.OrderValidationException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.f4b6a3.uuid.UuidCreator;
 import lombok.Getter;
 
@@ -20,7 +22,14 @@ public class Order {
     private final Instant createdAt;
     private final List<OrderStatusHistory> orderStatusHistory;
 
-    private Order(UUID orderId, UUID customerId, String currency, List<OrderItem> items, Instant createdAt, List<OrderStatusHistory> orderStatusHistory) {
+    @JsonCreator
+    private Order(
+            @JsonProperty("orderId") UUID orderId,
+            @JsonProperty("customerId") UUID customerId,
+            @JsonProperty("currency") String currency,
+            @JsonProperty("items") List<OrderItem> items,
+            @JsonProperty("createdAt") Instant createdAt,
+            @JsonProperty("orderStatusHistory") List<OrderStatusHistory> orderStatusHistory) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.currency = currency;

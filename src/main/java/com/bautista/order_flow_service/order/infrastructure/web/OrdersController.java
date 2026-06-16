@@ -12,26 +12,20 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 public class OrdersController {
     private final CreateOrderUseCase createOrderUseCase;
-    private final IdempotencyService idempotencyService;
 
-    public OrdersController(CreateOrderUseCase createOrderUseCase, IdempotencyService idempotencyService) {
+    public OrdersController(CreateOrderUseCase createOrderUseCase) {
         this.createOrderUseCase = createOrderUseCase;
-        this.idempotencyService = idempotencyService;
     }
 
     @PostMapping("/orders")
     public ResponseEntity<OrderResponse> postOrders(
             @Valid @RequestBody CreateOrderRequest createOrderRequest,
             @RequestHeader("Idempotency-Key") UUID idempotencyKey) {
-        Optional<ResponseEntity<OrderResponse>> cached = idempotencyService.findCachedResponse(idempotencyKey, "/orders");
-        if (cached.isPresent()) return cached.get();
-
         List<OrderItem> items = createOrderRequest.getOrderItemRequests()
                 .stream()
                 .map(item -> new OrderItem(
@@ -42,10 +36,9 @@ public class OrdersController {
         Order order = this.createOrderUseCase.execute(
                 createOrderRequest.getCustomerId(),
                 createOrderRequest.getCurrency(),
-                items
+                items,
+                idempotencyKey
         );
-        OrderResponse orderResponse = OrderResponse.from(order);
-        idempotencyService.save(idempotencyKey, "/orders", HttpStatus.CREATED.value(), orderResponse);
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(OrderResponse.from(order));
     }
 }

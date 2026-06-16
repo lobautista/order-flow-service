@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CreateOrderUseCase {
-    Order execute(UUID customerId, String currency, List<OrderItem> orderItems);
+    Order execute(UUID customerId, String currency, List<OrderItem> orderItems, UUID idempotencyKey);
 }
