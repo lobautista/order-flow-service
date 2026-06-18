@@ -16,10 +16,11 @@ public class Order {
     private final UUID orderId;
     private final UUID customerId;
     private final OrderStatus status;
+    private final BigDecimal totalAmount;
     private final List<OrderItem> items;
     private final String currency;
-    private final BigDecimal totalAmount;
     private final Instant createdAt;
+    private final Instant updatedAt;
     private final List<OrderStatusHistory> orderStatusHistory;
 
     @JsonCreator
@@ -37,6 +38,28 @@ public class Order {
         this.status = OrderStatus.PENDING;
         this.totalAmount = items.stream().map(OrderItem::getSubTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
         this.createdAt = createdAt;
+        this.updatedAt = createdAt;
+        this.orderStatusHistory = orderStatusHistory;
+    }
+
+    private Order(
+            UUID orderId,
+            UUID customerId,
+            OrderStatus status,
+            BigDecimal totalAmount,
+            String currency,
+            Instant createdAt,
+            Instant updatedAt,
+            List<OrderItem> items,
+            List<OrderStatusHistory> orderStatusHistory) {
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.currency = currency;
+        this.items = items;
+        this.status = status;
+        this.totalAmount = totalAmount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.orderStatusHistory = orderStatusHistory;
     }
 
@@ -55,5 +78,18 @@ public class Order {
                 now
         ));
         return new Order(orderId, customerId, currency, items, now, orderStatusHistory);
+    }
+
+    public static Order fromPersistence(UUID orderId,
+                                        UUID customerId,
+                                        OrderStatus status,
+                                        BigDecimal totalAmount,
+                                        String currency,
+                                        Instant createdAt,
+                                        Instant updatedAt,
+                                        List<OrderItem> items,
+                                        List<OrderStatusHistory> statuses) {
+
+        return new Order(orderId, customerId, status, totalAmount, currency, createdAt, updatedAt, items, statuses);
     }
 }

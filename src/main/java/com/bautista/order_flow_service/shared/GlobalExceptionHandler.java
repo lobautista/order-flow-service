@@ -1,5 +1,6 @@
 package com.bautista.order_flow_service.shared;
 
+import com.bautista.order_flow_service.order.domain.exception.OrderNotFoundException;
 import com.bautista.order_flow_service.order.domain.exception.OrderValidationException;
 import com.bautista.order_flow_service.shared.infrastructure.web.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleOrderValidationException(OrderValidationException ex) {
         ErrorResponse response = ErrorResponse.of(List.of(ex.getMessage()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleOrderNotFoundException(OrderNotFoundException ex) {
+        ErrorResponse response = ErrorResponse.of(List.of(ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler
