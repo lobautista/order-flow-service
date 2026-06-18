@@ -19,22 +19,22 @@ public class OrderJpaEntity {
     @Column(name = "order_id", nullable = false, updatable = false)
     private UUID orderId;
 
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", nullable = false, updatable = false)
     private UUID customerId;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(name = "total_amount")
+    @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
 
-    @Column(name = "currency")
+    @Column(name = "currency", nullable = false, updatable = false)
     private String currency;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

@@ -40,7 +40,8 @@
       "Bash(echo \"exit=$?\")",
       "Read(//tmp/**)",
       "Bash(./mvnw -q dependency:tree)",
-      "Bash(./mvnw dependency:tree)"
+      "Bash(./mvnw dependency:tree)",
+      "Bash(docker --version)"
     ]
   }
 }

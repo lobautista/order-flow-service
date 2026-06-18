@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.util.List;
@@ -19,5 +20,6 @@ public class CreateOrderRequest {
     private List<OrderItemRequest> orderItemRequests;
 
     @NotBlank(message = "Missing currency")
+    @Pattern(regexp = "[A-Z]{3}", message = "Enter valid currency value")
     private String currency;
 }
