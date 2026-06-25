@@ -1,6 +1,7 @@
 package com.bautista.order_flow_service.order;
 
 import com.jayway.jsonpath.JsonPath;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -36,6 +37,17 @@ class OrderApiIntegrationTest {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @BeforeEach
+    void resetDatabase() {
+        // The container is shared (static) across every test in the class, so each test must start
+        // from a clean slate — otherwise the count(*) assertions below leak across tests. TRUNCATE
+        // (rather than a @Transactional rollback) keeps the service's real commit/flush behaviour
+        // intact, which matters for an audit-trail test. CASCADE clears the FK-linked child tables.
+        jdbcTemplate.execute(
+                "TRUNCATE TABLE orders, order_items, order_status_history, idempotency_keys "
+                        + "RESTART IDENTITY CASCADE");
+    }
 
     private String orderJson() {
         return """

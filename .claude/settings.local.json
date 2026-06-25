@@ -41,7 +41,24 @@
       "Read(//tmp/**)",
       "Bash(./mvnw -q dependency:tree)",
       "Bash(./mvnw dependency:tree)",
-      "Bash(docker --version)"
+      "Bash(docker --version)",
+      "Bash(./mvnw -q compile)",
+      "Bash(./mvnw compile *)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(./gradlew compileJava)",
+      "Bash(jar tf *)",
+      "PowerShell(try { $r = Invoke-RestMethod -Uri \"https://search.maven.org/solrsearch/select?q=g:com.github.docker-java+AND+a:docker-java-api&core=gav&rows=8&wt=json\" -TimeoutSec 30; $r.response.docs | Select-Object -ExpandProperty v } catch { \"search.maven.org failed: $\\($_.Exception.Message\\)\" })",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "PowerShell(docker version --format '{{.Server.Version}} \\(API {{.Server.APIVersion}}\\)'; docker desktop version 2>$null)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(git -C \"C:/Users/luisb/git/order-flow-service\" status --short)",
+      "Bash(git -C \"C:/Users/luisb/git/order-flow-service\" diff --stat)",
+      "PowerShell(.\\\\mvnw.cmd -q -Dtest=OrderApiIntegrationTest test)",
+      "PowerShell(Start-Process \"C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe\"; \"Launched Docker Desktop, waiting for engine...\")",
+      "PowerShell($ok=$false; for \\($i=0; $i -lt 60; $i++\\) { $v = docker info --format '{{.ServerVersion}}' 2>$null; if \\($v\\) { \"Docker ready: $v\"; $ok=$true; break }; Start-Sleep -Seconds 5 }; if \\(-not $ok\\) { \"Docker did not become ready in time\" })",
+      "PowerShell($out = .\\\\mvnw.cmd -Dtest=OrderApiIntegrationTest test 2>&1 | Out-String; \\($out -split \"`n\" | Select-String -Pattern \"BUILD SUCCESS|BUILD FAILURE|Tests run:|TRUNCATE|FAILED\"\\) | Select-Object -Last 20)"
     ]
   }
 }
